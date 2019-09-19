@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:656291102872:android:1b7829f2ac180d28",
+        "mobilesdk_app_id": "1:656291102872:android:c7dc2ba7db6f5d80",
         "android_client_info": {
-          "package_name": "com.example.firebase"
+          "package_name": "com.example.macrotechlogin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "656291102872-1i6d5kkm7jtm1ail768krbjto4dq5ab1.apps.googleusercontent.com",
+          "client_id": "656291102872-82809idlaqcfumm4h6sir48ijq11kvbe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.firebase",
+            "package_name": "com.example.macrotechlogin",
             "certificate_hash": "9173f07bfa65e41a538817133ab41036c3c73171"
           }
         },
@@ -45,17 +45,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:656291102872:android:c7dc2ba7db6f5d80",
+        "mobilesdk_app_id": "1:656291102872:android:96fe8f22cb5b611b",
         "android_client_info": {
-          "package_name": "com.example.macrotechlogin"
+          "package_name": "com.example.mtech"
         }
       },
       "oauth_client": [
         {
-          "client_id": "656291102872-82809idlaqcfumm4h6sir48ijq11kvbe.apps.googleusercontent.com",
+          "client_id": "656291102872-rbj11n0g81qdmrmv4bv596tcus9tlkep.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.macrotechlogin",
+            "package_name": "com.example.mtech",
             "certificate_hash": "9173f07bfa65e41a538817133ab41036c3c73171"
           }
         },

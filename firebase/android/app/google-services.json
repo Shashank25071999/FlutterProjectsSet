@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "656291102872",
+    "firebase_url": "https://macrotech-44e5c.firebaseio.com",
+    "project_id": "macrotech-44e5c",
+    "storage_bucket": "macrotech-44e5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656291102872:android:1b7829f2ac180d28",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656291102872-lujof4rnu4looa4jq46rphqnrvukivdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPR_qVnujXgwpB3QteMfGOQckrpxeurQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656291102872-lujof4rnu4looa4jq46rphqnrvukivdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

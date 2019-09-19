@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:macrotechlogin/clientUser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MaterialApp(
     home: MyApp(),
   ));
 }
-
+class User {
+  String email;
+  String password;
+  String id;
+  String idToken;
+  User({this.email, this.password, this.id, this.idToken});
+}
 enum Authclient {
   Signup,
   Login,
@@ -28,15 +36,48 @@ class Client {
 }
 
 class MyAppState extends State<MyApp> {
+   void initState(){
+
+    autoLogin();
+    super.initState();
+  }
   List<Client> clientInfo = [];
   bool yes = false;
-  Authclient authclient = Authclient.Signup;
-
+  Authclient authclient = Authclient.Login;
+  User authenticateUser = User();
   String email;
   String password;
 
   GlobalKey<FormState> authkey = GlobalKey<FormState>();
   int number;
+  void autoLogin()async{
+    SharedPreferences pref=await SharedPreferences.getInstance();
+   String token= pref.getString('token');
+   if(token!=null){
+     final String email=pref.getString('email');
+     final String id=pref.getString('localId');
+     final String password=pref.getString('password');
+     User authenticateUser=User(email: email,id: id,password: password,idToken: token);
+     Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => ClientUser(authenticateUser,logout)));
+     
+   }
+
+  }
+  void logout()async{
+    authenticateUser=null;
+    SharedPreferences pref=await SharedPreferences.getInstance();
+    pref.remove('token');
+    pref.remove('email');
+    pref.remove('localId');
+    pref.remove('password');
+    pref.remove('name');
+    pref.remove('email');
+    pref.remove('number');
+    pref.remove('id');
+    pref.remove('userdbid');
+    
+  }
   void fetchdata(String email, int number, String password) {
     http
         .get('https://macrotech-44e5c.firebaseio.com/Usersnotauth.json')
@@ -95,8 +136,12 @@ class MyAppState extends State<MyApp> {
   void loginfunction(String email,String password)async{
     Map<String,dynamic> successInformation;
       successInformation= await login(email, password);
+      print(successInformation);
      if (successInformation['success']) {
         print('Login Sucessfull');
+         Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => ClientUser(authenticateUser,logout)));
+       
       }
       // print('authenticate');
       else {
@@ -108,7 +153,7 @@ class MyAppState extends State<MyApp> {
                 content: Text(successInformation ['message']),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Okay'),
+                    child: Text('Okay'),  
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -130,6 +175,21 @@ class MyAppState extends State<MyApp> {
         body: jsonEncode(autodata),
         headers: {"Content-Type": "application/json"});
          Map<String, dynamic> responsedata = json.decode(response.body);
+         print(responsedata);
+         print("id token:${responsedata['idToken']}");
+          authenticateUser = User(
+            email: email,
+            id: responsedata['localId'],
+            password: password,
+            idToken: responsedata['idToken']);
+               SharedPreferences pref=await SharedPreferences.getInstance();
+            pref.setString('token', responsedata['idToken']);
+            pref.setString('email', email);
+            pref.setString('localId', responsedata['localId']);
+            pref.setString('password', password);
+            print(authenticateUser.idToken);
+            print(authenticateUser.email);
+            print(authenticateUser.password);
     bool haserror = false;
     String message = 'Somethimg went wrong.';
     if (responsedata.containsKey('idToken')) {
@@ -144,7 +204,7 @@ class MyAppState extends State<MyApp> {
       message = 'Invalid Password';
     }
 
-    print(response.body);
+    //print(response.body);
     return {'success': haserror, 'message': message};
   
         
@@ -196,6 +256,7 @@ class MyAppState extends State<MyApp> {
             ),
             authclient == Authclient.Signup
                 ? TextFormField(
+                  obscureText: true,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         hintText: 'Enter Number ', labelText: 'number'),
@@ -205,6 +266,7 @@ class MyAppState extends State<MyApp> {
                   )
                 : Container(),
             TextFormField(
+              obscureText: true,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   hintText: 'Enter Password ', labelText: 'Password'),
